@@ -58,12 +58,19 @@ export function StatusSelector({
         aria-checked={value === "ok"}
         onClick={() => onChange("ok")}
         className={cn(
-          "flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
+          "relative flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
           value === "ok"
-            ? "animate-stamp-pop border-state-success-500 bg-state-success-50 text-state-success-600 shadow-card"
-            : "border-slate-200 bg-white text-slate-500 hover:border-state-success-500/40 hover:text-state-success-600"
+            ? "animate-stamp-pop animate-toggle-on-success border-state-success-500 bg-state-success-500 text-white shadow-raised"
+            : "border-slate-200 bg-slate-50 text-slate-400 shadow-inner hover:border-state-success-500/40 hover:text-state-success-600"
         )}
       >
+        <span
+          aria-hidden="true"
+          className={cn(
+            "absolute right-2.5 top-2.5 size-1.5 rounded-full transition-all duration-200",
+            value === "ok" ? "bg-white shadow-[0_0_6px_2px_rgba(255,255,255,0.85)]" : "bg-slate-300"
+          )}
+        />
         <Check className="size-5" aria-hidden="true" />
         Conforme
       </button>
@@ -74,12 +81,19 @@ export function StatusSelector({
         aria-checked={value === "non_compliant"}
         onClick={() => onChange("non_compliant")}
         className={cn(
-          "flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 px-1 text-center text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
+          "relative flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 px-1 text-center text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
           value === "non_compliant"
-            ? "animate-stamp-pop border-state-danger-500 bg-state-danger-50 text-state-danger-600 shadow-card"
-            : "border-slate-200 bg-white text-slate-500 hover:border-state-danger-500/40 hover:text-state-danger-600"
+            ? "animate-stamp-pop animate-toggle-on-danger border-state-danger-500 bg-state-danger-500 text-white shadow-raised"
+            : "border-slate-200 bg-slate-50 text-slate-400 shadow-inner hover:border-state-danger-500/40 hover:text-state-danger-600"
         )}
       >
+        <span
+          aria-hidden="true"
+          className={cn(
+            "absolute right-2.5 top-2.5 size-1.5 rounded-full transition-all duration-200",
+            value === "non_compliant" ? "bg-white shadow-[0_0_6px_2px_rgba(255,255,255,0.85)]" : "bg-slate-300"
+          )}
+        />
         <X className="size-5" aria-hidden="true" />
         Não conforme
       </button>
@@ -92,8 +106,8 @@ export function StatusSelector({
         className={cn(
           "relative flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96] disabled:opacity-60",
           photoCount > 0
-            ? "border-brand-blue-500 bg-brand-blue-50 text-brand-blue-600 shadow-card"
-            : "border-slate-200 bg-white text-slate-500 hover:border-brand-blue-400/50 hover:text-brand-blue-600"
+            ? "border-brand-blue-500 bg-brand-blue-500 text-white shadow-raised"
+            : "border-slate-200 bg-slate-50 text-slate-400 shadow-inner hover:border-brand-blue-400/50 hover:text-brand-blue-600"
         )}
       >
         {busy ? (
@@ -103,7 +117,7 @@ export function StatusSelector({
         )}
         Foto
         {photoCount > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 flex size-[18px] items-center justify-center rounded-full bg-brand-blue-600 text-[10px] font-bold text-white ring-2 ring-white">
+          <span className="absolute -right-1.5 -top-1.5 flex size-[18px] items-center justify-center rounded-full bg-brand-yellow-400 text-[10px] font-bold text-brand-blue-700 ring-2 ring-white">
             {photoCount}
           </span>
         )}

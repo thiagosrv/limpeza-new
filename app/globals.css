@@ -194,3 +194,35 @@
 .animate-fade-up {
   animation: fade-up 260ms var(--ease-snap) both;
 }
+
+@keyframes toggle-on-success {
+  0% {
+    box-shadow: 0 0 0 0 rgb(28 154 82 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgb(28 154 82 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(28 154 82 / 0);
+  }
+}
+
+.animate-toggle-on-success {
+  animation: toggle-on-success 500ms var(--ease-snap);
+}
+
+@keyframes toggle-on-danger {
+  0% {
+    box-shadow: 0 0 0 0 rgb(214 58 58 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgb(214 58 58 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(214 58 58 / 0);
+  }
+}
+
+.animate-toggle-on-danger {
+  animation: toggle-on-danger 500ms var(--ease-snap);
+}

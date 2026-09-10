@@ -7,17 +7,17 @@ const CONFIG: Record<SyncState, { label: string; icon: React.ReactNode; classNam
   saving: {
     label: "Salvando…",
     icon: <Loader2 className="size-3.5 animate-spin" aria-hidden="true" />,
-    className: "text-slate-500",
+    className: "text-brand-blue-200",
   },
   synced: {
     label: "Salvo",
     icon: <Check className="size-3.5" aria-hidden="true" />,
-    className: "text-state-success-600",
+    className: "text-state-success-500",
   },
   offline: {
     label: "Salvo neste dispositivo",
     icon: <CloudOff className="size-3.5" aria-hidden="true" />,
-    className: "text-slate-500",
+    className: "text-brand-blue-200",
   },
   error: {
     label: "Não foi possível sincronizar",

@@ -19,7 +19,7 @@ export function AppHeader({
   return (
     <header
       className={cn(
-        "safe-top sticky top-0 z-30 flex items-center gap-3 border-b border-slate-100 bg-white/95 px-4 py-3 backdrop-blur",
+        "safe-top sticky top-0 z-30 flex items-center gap-3 border-b-2 border-brand-yellow-400 bg-gradient-to-r from-brand-blue-700 via-brand-blue-600 to-brand-blue-700 px-4 py-3.5 shadow-raised",
         className
       )}
     >
@@ -27,17 +27,17 @@ export function AppHeader({
         <Link
           href={backHref}
           aria-label="Voltar"
-          className="-ml-1.5 flex size-9 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 active:bg-slate-200"
+          className="-ml-1.5 flex size-9 shrink-0 items-center justify-center rounded-lg text-brand-blue-200 transition-colors hover:bg-white/10 hover:text-white active:bg-white/15"
         >
           <ChevronLeft className="size-5" />
         </Link>
       )}
-      <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl shadow-card ring-1 ring-slate-100">
+      <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl shadow-card ring-1 ring-white/15">
         <Image src="/logo.png" alt="PS Proteção" fill sizes="40px" className="object-cover" priority />
       </span>
       <div className="min-w-0 flex-1">
-        <h1 className="truncate font-display text-[15px] font-bold leading-tight text-slate-900">{title}</h1>
-        {subtitle && <p className="truncate text-xs font-medium text-slate-500">{subtitle}</p>}
+        <h1 className="truncate font-display text-[15px] font-bold leading-tight text-white">{title}</h1>
+        {subtitle && <p className="truncate text-xs font-medium text-brand-blue-200">{subtitle}</p>}
       </div>
       {right && <div className="flex shrink-0 items-center gap-2">{right}</div>}
     </header>
