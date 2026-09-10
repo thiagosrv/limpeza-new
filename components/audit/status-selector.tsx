@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Camera, Check, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { playClickSound } from "@/lib/utils/click-sound";
 import type { ItemStatus } from "@/lib/offline/types";
 
 export function StatusSelector({
@@ -56,7 +57,10 @@ export function StatusSelector({
         type="button"
         role="radio"
         aria-checked={value === "ok"}
-        onClick={() => onChange("ok")}
+        onClick={() => {
+          playClickSound();
+          onChange("ok");
+        }}
         className={cn(
           "relative flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
           value === "ok"
@@ -79,7 +83,10 @@ export function StatusSelector({
         type="button"
         role="radio"
         aria-checked={value === "non_compliant"}
-        onClick={() => onChange("non_compliant")}
+        onClick={() => {
+          playClickSound();
+          onChange("non_compliant");
+        }}
         className={cn(
           "relative flex h-[68px] flex-col items-center justify-center gap-1 rounded-xl border-2 px-1 text-center text-[11px] font-bold leading-tight transition-all duration-150 active:scale-[0.96]",
           value === "non_compliant"

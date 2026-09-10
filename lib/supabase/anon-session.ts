@@ -23,7 +23,8 @@ export function ensureAnonymousSession(): Promise<string | null> {
         const { data: signInData, error } = await supabase.auth.signInAnonymously();
         if (error) throw error;
         return signInData.user?.id ?? null;
-      } catch {
+      } catch (error) {
+        console.error("Falha ao autenticar sessão anônima no Supabase:", error);
         ensurePromise = null;
         return null;
       }

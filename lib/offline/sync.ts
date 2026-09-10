@@ -6,6 +6,10 @@ import { getDraft, getPhotosForAudit, getSignature, markPhotoUploaded, markSigna
 import { countLeafItems } from "@/lib/constants/checklist";
 import type { AuditDraft } from "@/lib/offline/types";
 
+function isDeviceOffline(): boolean {
+  return typeof navigator !== "undefined" && !navigator.onLine;
+}
+
 async function logEvent(auditId: string, eventType: string, payload?: Record<string, unknown>) {
   const supabase = createClient();
   await supabase.from("audit_events").insert({
@@ -159,8 +163,8 @@ export async function syncDraft(auditId: string): Promise<AuditDraft> {
   try {
     const userId = await ensureAnonymousSession();
     if (!userId) {
-      draft.syncState = "offline";
-      draft.lastError = null;
+      draft.syncState = isDeviceOffline() ? "offline" : "error";
+      draft.lastError = isDeviceOffline() ? null : "Não foi possível autenticar com o servidor.";
       await saveDraft(draft);
       return draft;
     }
@@ -180,7 +184,7 @@ export async function syncDraft(auditId: string): Promise<AuditDraft> {
     return draft;
   } catch (error) {
     draft = (await getDraft(auditId)) ?? draft;
-    draft.syncState = typeof navigator !== "undefined" && !navigator.onLine ? "offline" : "error";
+    draft.syncState = isDeviceOffline() ? "offline" : "error";
     draft.lastError = error instanceof Error ? error.message : "Falha ao sincronizar.";
     await saveDraft(draft);
     return draft;

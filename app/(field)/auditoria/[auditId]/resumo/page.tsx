@@ -151,10 +151,17 @@ function SuccessScreen({ draft, onNewAudit }: { draft: AuditDraft; onNewAudit: (
         <p className="mt-1 font-mono text-lg font-bold text-brand-blue-700">{draft.auditNumber}</p>
       </Card>
 
-      {draft.syncState !== "synced" && (
+      {draft.syncState === "offline" && (
         <Card className="flex items-center gap-2.5 border-brand-yellow-200 bg-brand-yellow-50/60 p-4 text-left text-sm font-medium text-brand-blue-700">
           <CloudOff className="size-5 shrink-0" />
           Sem conexão no momento — a auditoria está salva neste aparelho e será enviada automaticamente assim que a internet voltar.
+        </Card>
+      )}
+
+      {draft.syncState === "error" && (
+        <Card className="flex items-center gap-2.5 border-brand-yellow-200 bg-brand-yellow-50/60 p-4 text-left text-sm font-medium text-brand-blue-700">
+          <TriangleAlert className="size-5 shrink-0" />
+          Não foi possível enviar agora — a auditoria está salva neste aparelho e tentaremos novamente em breve.
         </Card>
       )}
 
