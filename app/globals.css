@@ -165,3 +165,32 @@
 .animate-toast-in {
   animation: toast-in 180ms var(--ease-snap);
 }
+
+@keyframes live-glow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-float), 0 0 0 0 rgb(12 21 102 / 0.28);
+  }
+  50% {
+    box-shadow: var(--shadow-float), 0 0 0 7px rgb(12 21 102 / 0);
+  }
+}
+
+.animate-live-glow {
+  animation: live-glow 2.6s var(--ease-snap) infinite;
+}
+
+@keyframes fade-up {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 260ms var(--ease-snap) both;
+}

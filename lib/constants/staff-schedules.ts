@@ -103,8 +103,8 @@ export const STAFF_SCHEDULES: StaffSchedule[] = [
     notes: ["Limpeza dos ventiladores dos banheiros: 1 vez por mês"],
   },
   {
-    id: "angelica",
-    name: "Angélica",
+    id: "mirian",
+    name: "Mirian",
     groups: [
       {
         days: ["segunda"],
@@ -287,7 +287,7 @@ export const STAFF_SCHEDULES: StaffSchedule[] = [
           ["07:00", "07:30", "Recolher roupas (Prédio 2)"],
           ["07:35", "07:50", "Ginástica laboral"],
           ["07:50", "08:05", "Café"],
-          ["08:05", "09:40", "Lavar área de lazer e lavanderia (com Angélica)"],
+          ["08:05", "09:40", "Lavar área de lazer e lavanderia (com Mirian)"],
           ["09:40", "10:20", "Roupas"],
           ["10:20", "11:00", "Manutenção da área de lazer (sala de TV, mesas de bilhar e sofás)"],
           ["11:00", "12:00", "Almoço"],
@@ -354,7 +354,7 @@ export const STAFF_SCHEDULES: StaffSchedule[] = [
       },
     ],
     notes: [
-      "A cada 15 dias: lavagem da manutenção, apoio Angélica",
+      "A cada 15 dias: lavagem da manutenção, apoio Mirian",
       "Uma vez por mês (sempre quinta-feira): lavagem das lixeiras",
     ],
   },
