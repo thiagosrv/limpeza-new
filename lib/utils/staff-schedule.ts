@@ -16,8 +16,8 @@ export interface StaffCurrentStatus {
   id: string;
   name: string;
   weekday: Weekday | null;
-  /** Tarefa/local atual, ou `null` fora do horário de trabalho. */
-  currentTask: string | null;
+  /** Tarefa/local atual (com horário do cronograma), ou `null` fora do horário de trabalho. */
+  currentTask: { time: string; description: string } | null;
   /** Próxima tarefa agendada, quando fora do horário mas ainda é dia útil. */
   nextTask: { time: string; description: string } | null;
 }
@@ -47,7 +47,14 @@ export function getStaffCurrentStatus(at: Date = new Date()): StaffCurrentStatus
 
     const current = group.blocks.find((b) => nowMinutes >= b.start && nowMinutes < b.end);
     if (current) {
-      return { id: staff.id, name: staff.name, weekday, currentTask: current.description, nextTask: null };
+      const time = `${minutesToHHmm(current.start)} às ${minutesToHHmm(current.end)}`;
+      return {
+        id: staff.id,
+        name: staff.name,
+        weekday,
+        currentTask: { time, description: current.description },
+        nextTask: null,
+      };
     }
 
     const next = group.blocks.find((b) => b.start > nowMinutes);

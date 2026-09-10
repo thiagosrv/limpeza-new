@@ -40,9 +40,15 @@ async function ensureAuditOnServer(draft: AuditDraft) {
 
 async function pushResponses(draft: AuditDraft): Promise<Map<string, string>> {
   const supabase = createClient();
-  const rows = Object.values(draft.responses).filter(
-    (r) => r.status !== null || r.justification.trim() || r.notes.trim()
-  );
+  const rows = Object.values(draft.responses).filter((r) => {
+    const hasContent = r.status !== null || r.justification.trim() || r.notes.trim();
+    if (!hasContent) return false;
+    // O banco exige justificativa preenchida quando o status é "não conforme".
+    // Enquanto o supervisor ainda está digitando, adiar o envio deste item em
+    // vez de tentar sincronizar e receber um erro do servidor.
+    if (r.status === "non_compliant" && !r.justification.trim()) return false;
+    return true;
+  });
 
   if (rows.length > 0) {
     const { error } = await supabase.from("audit_responses").upsert(

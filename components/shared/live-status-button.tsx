@@ -91,10 +91,11 @@ export function LiveStatusButton() {
                     )}
                   </div>
                   <p className="mt-1 text-sm text-slate-600">
-                    {staff.currentTask ??
-                      (staff.nextTask
+                    {staff.currentTask
+                      ? `${staff.currentTask.description} - ${staff.currentTask.time}`
+                      : staff.nextTask
                         ? `Próxima atividade às ${staff.nextTask.time}: ${staff.nextTask.description}`
-                        : "Sem atividades previstas para hoje.")}
+                        : "Sem atividades previstas para hoje."}
                   </p>
                 </div>
               </li>
