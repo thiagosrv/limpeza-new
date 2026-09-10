@@ -29,14 +29,14 @@ export function LiveStatusButton() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Ver colaboradoras ao vivo"
-        className="animate-live-glow animate-stamp-pop safe-bottom fixed bottom-20 right-4 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-br from-brand-blue-500 to-brand-blue-700 py-3 pl-3.5 pr-4 text-white shadow-float ring-1 ring-white/15 transition-transform duration-150 ease-out active:scale-95 sm:bottom-6"
+        className="animate-live-glow animate-stamp-pop fixed bottom-20 right-4 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-br from-brand-blue-500 to-brand-blue-700 pl-3.5 pr-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] text-white shadow-float ring-1 ring-white/15 transition-transform duration-150 ease-out active:scale-95 sm:bottom-6"
       >
         <span className="relative flex size-2.5 shrink-0">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-state-danger-500 opacity-75" />
           <span className="relative inline-flex size-2.5 rounded-full bg-state-danger-500 ring-2 ring-brand-blue-700/40" />
         </span>
-        <Radio className="size-4" strokeWidth={2.5} />
-        <span className="text-xs font-extrabold tracking-widest">LIVE</span>
+        <Radio className="size-4 shrink-0" strokeWidth={2.5} />
+        <span className="text-xs font-extrabold leading-none tracking-widest">LIVE</span>
       </button>
 
       <Dialog
