@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { ConnectionBadge } from "@/components/shared/connection-badge";
 import { cn } from "@/lib/utils/cn";
 
 export function AppHeader({
@@ -19,7 +22,7 @@ export function AppHeader({
   return (
     <header
       className={cn(
-        "safe-top sticky top-0 z-30 flex items-center gap-3 border-b-2 border-brand-yellow-400 bg-gradient-to-r from-brand-blue-700 via-brand-blue-600 to-brand-blue-700 px-4 py-3.5 shadow-raised",
+        "sticky top-0 z-30 flex items-center gap-3 border-b-2 border-brand-yellow-400 bg-gradient-to-r from-brand-blue-700 via-brand-blue-600 to-brand-blue-700 px-5 pb-4 pt-[calc(1rem+env(safe-area-inset-top))] shadow-raised",
         className
       )}
     >
@@ -39,7 +42,10 @@ export function AppHeader({
         <h1 className="truncate font-display text-[15px] font-bold leading-tight text-white">{title}</h1>
         {subtitle && <p className="truncate text-xs font-medium text-brand-blue-200">{subtitle}</p>}
       </div>
-      {right && <div className="flex shrink-0 items-center gap-2">{right}</div>}
+      <div className="flex shrink-0 items-center gap-2">
+        <ConnectionBadge />
+        {right}
+      </div>
     </header>
   );
 }
