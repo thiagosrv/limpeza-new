@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LogIn, ShieldCheck } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormField, Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -54,8 +55,8 @@ export function AdminLoginForm() {
     <div className="flex min-h-dvh flex-col items-center justify-center bg-brand-blue-700 px-6 py-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
-          <span className="flex size-16 items-center justify-center rounded-2xl bg-white text-brand-blue-700 shadow-float">
-            <ShieldCheck className="size-8" />
+          <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl shadow-float ring-4 ring-white/10">
+            <Image src="/logo.png" alt="PS Proteção" fill sizes="64px" className="object-cover" priority />
           </span>
           <div>
             <h1 className="font-display text-2xl font-extrabold text-white">PS Proteção</h1>

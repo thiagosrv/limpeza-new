@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, ClipboardList, LogOut, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, ClipboardList, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { logoutAdmin } from "@/app/admin/(dashboard)/actions";
 
@@ -22,8 +23,8 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
     <>
       <header className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-slate-200 bg-white px-4 lg:hidden">
         <div className="flex items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-brand-blue-600 text-brand-yellow-400">
-            <ShieldCheck className="size-4.5" />
+          <span className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-card">
+            <Image src="/logo.png" alt="PS Proteção" fill sizes="32px" className="object-cover" priority />
           </span>
           <span className="font-display text-[15px] font-bold text-brand-blue-700">PS Proteção</span>
         </div>
@@ -48,8 +49,8 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
 
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-200 bg-white lg:flex">
         <div className="flex items-center gap-2.5 px-5 py-6">
-          <span className="flex size-10 items-center justify-center rounded-xl bg-brand-blue-600 text-brand-yellow-400 shadow-raised">
-            <ShieldCheck className="size-5.5" />
+          <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl shadow-raised">
+            <Image src="/logo.png" alt="PS Proteção" fill sizes="40px" className="object-cover" priority />
           </span>
           <div>
             <p className="font-display text-base font-extrabold text-brand-blue-700">PS Proteção</p>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MessageSquarePlus } from "lucide-react";
 import { StatusSelector } from "@/components/audit/status-selector";
-import { PhotoUploader } from "@/components/audit/photo-uploader";
+import { PhotoThumbnails } from "@/components/audit/photo-thumbnails";
 import { Textarea } from "@/components/ui/textarea";
 import type { DraftPhoto, DraftResponse, ItemStatus } from "@/lib/offline/types";
 
@@ -37,7 +37,9 @@ export function ChecklistItem({
     <div className="flex flex-col gap-3 rounded-xl border border-slate-100 bg-slate-25 p-3.5" id={`item-${itemId}`}>
       <p className="text-sm font-semibold text-slate-800">{name}</p>
 
-      <StatusSelector value={status} onChange={onStatusChange} />
+      <StatusSelector value={status} onChange={onStatusChange} photoCount={photos.length} onAddPhoto={onAddPhoto} />
+
+      <PhotoThumbnails photos={photos} onRemove={onRemovePhoto} />
 
       {isNonCompliant && (
         <div className="flex flex-col gap-1.5">
@@ -56,8 +58,6 @@ export function ChecklistItem({
           )}
         </div>
       )}
-
-      <PhotoUploader photos={photos} onAdd={onAddPhoto} onRemove={onRemovePhoto} />
 
       {showNotes ? (
         <Textarea

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, History, Loader2, ShieldCheck } from "lucide-react";
+import { ArrowRight, History, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -48,8 +49,8 @@ export function StartAuditForm() {
   return (
     <div className="flex flex-1 flex-col justify-center gap-6 px-6 py-10">
       <div className="flex flex-col items-center gap-3 text-center">
-        <span className="flex size-16 items-center justify-center rounded-2xl bg-brand-blue-600 text-brand-yellow-400 shadow-raised">
-          <ShieldCheck className="size-8" />
+        <span className="relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-3xl shadow-float ring-1 ring-black/5">
+          <Image src="/logo.png" alt="PS Proteção" fill sizes="80px" className="object-cover" priority />
         </span>
         <div>
           <h1 className="font-display text-2xl font-extrabold text-brand-blue-700">PS Proteção</h1>
