@@ -8,9 +8,11 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Roda em todas as rotas, exceto assets estáticos, para poder renovar
-     * a sessão em qualquer navegação (necessário para o /admin ficar logado).
+     * Roda somente no /admin, onde é preciso renovar a sessão e validar o
+     * perfil. O fluxo de campo (supervisores) não usa sessão no servidor —
+     * o login anônimo acontece no navegador — e não pode depender da
+     * disponibilidade do Supabase só para abrir uma página.
      */
-    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|icons/).*)",
+    "/admin/:path*",
   ],
 };
