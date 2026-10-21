@@ -6,7 +6,6 @@ import { Accordion, AccordionItem } from "@/components/ui/accordion";
 import { AuditStatusBadge } from "@/components/admin/audit-status-badge";
 import { DetailChecklistItem } from "@/components/admin/detail-checklist-item";
 import { getAuditDetail } from "@/lib/admin/queries";
-import { CHECKLIST_AREAS } from "@/lib/constants/checklist";
 import { formatDateTime, formatDuration, formatPercentage } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
@@ -42,8 +41,17 @@ export default async function AuditDetailPage({ params }: { params: Promise<{ id
   const detail = await getAuditDetail(id);
   if (!detail) notFound();
 
-  const { audit, locationName, supervisorName, responseByItemId, photosByResponseId, photoUrlByPath, signature, signatureUrl } =
-    detail;
+  const {
+    audit,
+    locationName,
+    supervisorName,
+    areas,
+    responseByItemId,
+    photosByResponseId,
+    photoUrlByPath,
+    signature,
+    signatureUrl,
+  } = detail;
 
   return (
     <div className="flex flex-col gap-6">
@@ -92,7 +100,7 @@ export default async function AuditDetailPage({ params }: { params: Promise<{ id
       </div>
 
       <Accordion defaultOpen={[]}>
-        {CHECKLIST_AREAS.map((area) => {
+        {areas.map((area) => {
           const leaves = area.items.flatMap((item) => (item.children?.length ? item.children : [item]));
           const nonCompliant = leaves.filter((leaf) => responseByItemId.get(leaf.id)?.status === "non_compliant").length;
 

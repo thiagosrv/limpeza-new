@@ -1,4 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
+import {
+  CHECKLIST_AREAS,
+  type ChecklistAreaFixture,
+  type ChecklistItemFixture,
+} from "@/lib/constants/checklist";
 import { startOfTodayIso } from "@/lib/utils/format";
 import type { AuditFilterInput } from "@/lib/validation/schemas";
 import type { Audit, AuditPhoto, AuditResponse, AuditSignature, AuditStatus } from "@/types/database";
@@ -105,10 +110,63 @@ export async function listAudits(filters: AuditFilterInput): Promise<AuditListRe
   return { rows, total: count ?? 0, page, pageSize: PAGE_SIZE };
 }
 
+/**
+ * Checklist (áreas → itens → subitens) do cliente da auditoria, lido do banco
+ * para que clientes além da Hanier apareçam corretamente. Cai no fixture da
+ * Hanier quando o cliente não tem áreas cadastradas.
+ */
+async function loadChecklist(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  locationId: string
+): Promise<ChecklistAreaFixture[]> {
+  const { data: areaRows } = await supabase
+    .from("audit_areas")
+    .select("id, name, position")
+    .eq("location_id", locationId)
+    .order("position");
+
+  if (!areaRows || areaRows.length === 0) return CHECKLIST_AREAS;
+
+  const { data: itemRows } = await supabase
+    .from("audit_items")
+    .select("id, area_id, parent_item_id, name, position")
+    .in(
+      "area_id",
+      areaRows.map((a) => a.id)
+    )
+    .order("position");
+
+  const childrenByParent = new Map<string, ChecklistItemFixture[]>();
+  for (const row of itemRows ?? []) {
+    if (!row.parent_item_id) continue;
+    const list = childrenByParent.get(row.parent_item_id) ?? [];
+    list.push({ id: row.id, name: row.name, position: row.position });
+    childrenByParent.set(row.parent_item_id, list);
+  }
+
+  return areaRows.map((area) => ({
+    id: area.id,
+    name: area.name,
+    position: area.position,
+    items: (itemRows ?? [])
+      .filter((row) => row.area_id === area.id && !row.parent_item_id)
+      .map((row) => {
+        const children = childrenByParent.get(row.id);
+        return {
+          id: row.id,
+          name: row.name,
+          position: row.position,
+          ...(children ? { children } : {}),
+        };
+      }),
+  }));
+}
+
 export interface AuditDetail {
   audit: Audit;
   locationName: string;
   supervisorName: string;
+  areas: ChecklistAreaFixture[];
   responseByItemId: Map<string, AuditResponse>;
   photosByResponseId: Map<string, AuditPhoto[]>;
   photoUrlByPath: Map<string, string>;
@@ -123,13 +181,21 @@ export async function getAuditDetail(id: string): Promise<AuditDetail | null> {
   if (error) throw error;
   if (!audit) return null;
 
-  const [{ data: location }, { data: supervisor }, { data: responses }, { data: photos }, { data: signature }] =
+  const [
+    { data: location },
+    { data: supervisor },
+    { data: responses },
+    { data: photos },
+    { data: signature },
+    areas,
+  ] =
     await Promise.all([
       supabase.from("locations").select("name").eq("id", audit.location_id).maybeSingle(),
       supabase.from("profiles").select("name").eq("id", audit.supervisor_id).maybeSingle(),
       supabase.from("audit_responses").select("*").eq("audit_id", id),
       supabase.from("audit_photos").select("*").eq("audit_id", id),
       supabase.from("audit_signatures").select("*").eq("audit_id", id).maybeSingle(),
+      loadChecklist(supabase, audit.location_id),
     ]);
 
   const responseByItemId = new Map((responses ?? []).map((r) => [r.audit_item_id, r]));
@@ -161,6 +227,7 @@ export async function getAuditDetail(id: string): Promise<AuditDetail | null> {
     audit,
     locationName: location?.name ?? "—",
     supervisorName: supervisor?.name ?? "—",
+    areas,
     responseByItemId,
     photosByResponseId,
     photoUrlByPath,
